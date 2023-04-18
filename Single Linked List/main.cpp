@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -52,7 +53,7 @@ public:
         if (tail == nullptr) {
             head = tail = newNode;
         }
-            // if list is not empty, insert a new node at the end of the list
+        // if list is not empty, insert a new node at the end of the list
         else {
             tail->next = newNode;
             tail = newNode;
@@ -70,11 +71,11 @@ public:
             if (index == 0) {
                 insertAtHead(item);
             }
-                // if inserting at the end
+            // if inserting at the end
             else if (index == Size) {
                 insertAtTail(item);
             }
-                // if inserting at the middle
+            // if inserting at the middle
             else {
                 auto *newNode = new Node<T>;
                 newNode->data = item;
@@ -118,15 +119,13 @@ public:
             cout << "Can not remove. List is empty!\n";
             return;
         }
-            // if the list has only one item
+        // if the list has only one item
         else if (Size == 1) {
             delete head;
             delete tail;
             head = tail = nullptr;
         }
-            /* if the list has more than one item,
-               traverse the list to find the node before the tail
-            */
+        // if the list has more than one item, traverse the list to find the node before the tail
         else {
             auto *temp = new Node<T>;
             temp = head;
@@ -167,7 +166,7 @@ public:
         if (index == 0) {
             return (head->data);
         }
-            // retrieve tail data
+        // retrieve tail data
         else if (index == Size - 1) {
             return (tail->data);
         } else {
@@ -178,6 +177,66 @@ public:
             }
             return (temp->data);
         }
+    }
+
+    // Replacing the element at a certain index with another new element
+    void replaceAt(T item, int index) {
+        if (index == 0) {
+            head->data = item;
+        } else if (index == Size) {
+            tail->data = item;
+        } else {
+            auto *temp = new Node<T>;
+            temp = head;
+            for (int i = 1; i <= index; i++) {
+                temp = temp->next;
+            }
+            temp->data = item;
+        }
+    }
+
+    // checking if an element exists in the list or not
+    bool isExist(T item) {
+        auto *temp = new Node<T>;
+        temp = head;
+        while (temp != nullptr) {
+            if (temp->data == item) {
+                return true;
+            } else {
+                temp = temp->next;
+            }
+        }
+        return false;
+    }
+
+    // check if item at a certain index equal the passed value or not
+    bool isItemAtEqual(T item, int index) {
+        auto *temp = new Node<T>;
+        temp = head;
+        for (int i = 0; i < index; i++) {
+            temp = temp->next;
+        }
+        if (temp->data == item) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // swap two nodes without swapping data
+    void Swap(int firstIndex, int secondIndex) {
+        auto *temp1 = new Node<T>;
+        auto *temp2 = new Node<T>;
+        temp1 = temp2 = head;
+        for (int i = 0; i < firstIndex; i++) {
+            temp1 = temp1->next;
+        }
+        for (int j = 0; j < secondIndex; j++) {
+            temp2 = temp2->next;
+        }
+//        cout << temp1 << " " << temp2 << endl;
+        swap(temp1, temp2);
+//        cout << temp1 << " " << temp2 << endl;
     }
 
     int linkedListSize() {
@@ -192,9 +251,20 @@ public:
         }
         cout << endl;
     }
-};
 
+    ~ SLL() {
+        auto *temp = new Node<T>;
+        while (head != nullptr) {
+            temp = head;
+            head = head->next;
+            delete temp;
+        }
+        head = tail = nullptr;
+        Size = 0;
+    }
+};
 int main() {
+    /*
     SLL<int> mylist;
     mylist.insertAtHead(1);
     mylist.insertAtHead(2);
@@ -203,9 +273,8 @@ int main() {
     mylist.insertAtHead(5);
     mylist.insertAtHead(6);
     mylist.insertAtHead(7);
-    cout << mylist.retrieveAt(4) << endl;
-
-    mylist.print();
+    mylist.Swap(1, 2);
     cout << mylist.linkedListSize();
     return 0;
+     */
 }
