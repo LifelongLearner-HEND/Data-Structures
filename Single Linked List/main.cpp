@@ -2,14 +2,14 @@
 #include <algorithm>
 
 using namespace std;
-
+// comment
 template<class T>
 class Node {
 public:
     T data;
     Node *next;
 };
-
+// comment
 template<class T>
 class SLL {
 public:
